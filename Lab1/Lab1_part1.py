@@ -26,7 +26,7 @@ def solveQuadratic(a: float, b: float, c: float) -> str:
         r1: float = (-1*b + math.sqrt(disc)) / (2*a)
         r2: float = (-1*b - math.sqrt(disc)) / (2*a)
 
-        # # displays smaller root first
+        # # displays smaller root 1st
         # if r1 < r2:
         return (f"The roots are {r1:.2f} and {r2:.2f}")
         
