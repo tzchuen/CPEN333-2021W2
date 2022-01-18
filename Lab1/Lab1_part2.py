@@ -14,8 +14,29 @@ def displayPyramid(size: int) -> None:
   6 5 4 3 2 1 2 3 4 5 6
 7 6 5 4 3 2 1 2 3 4 5 6 7
     """      
-    pass # remove this line, it is here for now for the code to be valid
-        
+
+    # outer loop controls row number
+    for row in range (1, size + 1): 
+
+      # pads left side of the pyramid with spaces
+      for num_space in range ( (size - row) * 2, 0, -2): 
+        print ("  ", end="") # end="" makes the next print statement print in the same line
+
+      # each row has the same number of elements as the k-th odd number
+      for k in range (0, (2 * row) - 1):
+    
+        # decrements numbers from row number until it reaches 1
+        if (row - k) >= 1:
+          print (row - k, end=" ")
+
+        # increments numbers from 1 until it reaches row number
+        else:
+          print (k - row + 2, end=" ")
+
+      # prints new line
+      print()
+
+
 if __name__ == "__main__":
     """ 
         We will ignore this part of the code.
