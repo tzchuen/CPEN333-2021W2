@@ -1,9 +1,5 @@
-# UBC CPEN 333 2021W2  - System Software Engineering
-
-**Calendar description**: Use of operating systems abstractions; real-time systems; principles of concurrent and multi-threaded programming; information structures; introduction to object oriented analysis; design, and modelling using UML; software testing.
-
-## Lab 1
-### Part 1: function to calculate the roots of a quadratic equation
+# Lab 1
+## Part 1: function to calculate the roots of a quadratic equation
 Consider the following code template:
 ```python
 # student name:
@@ -42,7 +38,7 @@ Complete the function `solveQuadratic` and submit the `Lab1_part1.py` file.
 
 The function takes `a, b, c` (the coefficients) and calculates the roots of the quadratic equation. If there is no real roots, it returns the string `"No real roots"`, if there is exactly one root, it returns the string `"The root is r1"` (replace `r1` with the value). If there are two roots, it returns the string `"The roots are r1 and r2` (replace `r1` and `r2` with their values). The numbers are formatted to have a precision of 2 digits after the decimal point (i.e. `.2f`, as in `print(f"{x:.2f}")` ).
 
-### Part 2: function to print a pyramid of numbers 
+## Part 2: function to print a pyramid of numbers 
 
 This is the typical nested loop exercise. Complete the function `displayPyramid` that prints a pyramid of numbers based on size as shown in the provided test cases.
 
@@ -131,7 +127,7 @@ The expected output for the test cases in the code above is:
 9 8 7 6 5 4 3 2 1 2 3 4 5 6 7 8 9
 ```
 
-### Part 3: using turtle to draw Olympic Rings 
+## Part 3: using turtle to draw Olympic Rings 
 
 In this part of the lab, you are to use the methods available in the turtle module to write a python script that draws the Olympic logo (the five interlocking circles, https://olympics.com/ioc/olympic-rings).
 
