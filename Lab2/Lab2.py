@@ -19,10 +19,20 @@ class TicTacToe:
 
     def printBoard(self) -> None:
         """ prints the board on the screen based on the values in the self.board data field """
-        print(self.board[0] + " | " + self.board[1] + " | "  + self.board[2] + "    0 | 1 | 2")
+        
+        # prints either X or O or ' ', depending on whether the cell is empty, or if the player/computer chose the cell
+        print(self.board[0] + " | " + self.board[1] + " | "  + self.board[2] + "    0 | 1 | 2") 
+
+        # grid
         print("--+---+--    --+---+--")
+
+        # prints either X or O or ' ', depending on whether the cell is empty, or if the player/computer chose the cell
         print(self.board[3] + " | " + self.board[4] + " | "  + self.board[5] + "    3 | 4 | 5")
-        print("--+---+--    --+---+--")
+
+        # grid
+        print("--+---+--    --+---+--") 
+
+        # prints either X or O or ' ', depending on whether the cell is empty, or if the player/computer chose the cell
         print(self.board[6] + " | " + self.board[7] + " | "  + self.board[8] + "    6 | 7 | 8")
 
 
@@ -32,17 +42,25 @@ class TicTacToe:
             and prints the info and the updated self.board;
         """
         try:
+            # asks player for input in cmd line and casts it as int
             self.playerChoice = int(input("Next move for X (state a valid cell number): "))
+
+            # if player chooses a non-empty cell, prompt for another choice
             if self.board[self.playerChoice] != ' ':
                 print("Must enter a valid cell number")
                 self.playerChoice = int(input("Next move for X (state a valid cell number): "))
+
         except ValueError:
-            print("Must be an integer")
+            print("Must be an integer") # makes sure that the input is an integer; throws exception otherwise
+
         except IndexError:
-            print("Must enter a valid cell number")
+            print("Must enter a valid cell number") # makes sure that the input is within 0 and 8; throws exception otherwise
         
+        # notes player's cell choice
         self.board [self.playerChoice] = 'X'
         print("You chose cell " + str(self.playerChoice))
+        
+        # prints the updated board
         self.printBoard()
 
 
@@ -50,24 +68,34 @@ class TicTacToe:
         """ computer randomly chooses a valid cell, 
             and prints the info and the updated self.board 
         """
+
+        # chooses a random cell number to play
         self.computerChoice = random.randint(0, 8)
 
+        # if cell is occupied, choose a different cell
         while self.board[self.computerChoice] != ' ':
             self.computerChoice = random.randint(0, 8)
         
+        # notes computer's cell choice
         self.board [self.computerChoice] = 'O'
         print("Computer chose cell " + str(self.computerChoice))
+
+        # prints updated board
         self.printBoard()
 
     def hasWon(self, who: str) -> bool:
         """ returns True if who (being passed 'X' or 'O') has won, False otherwise """
         self.who = who
         
+        # lists different win conditions, with 3 of the same moves:
+        # - horizontally
+        # - vertically
+        # - diagonally
         if (self.board[0] == self.board[1] == self.board[2] == who) or (self.board[3] == self.board[4] == self.board[5] == who) or (self.board[6] == self.board[7] == self.board[8] == who) or (self.board[0] == self.board[4] == self.board[8] == who) or (self.board[2] == self.board[4] == self.board[6] == who):
             return True
         
         else:
-            return False
+            return False # no winner
 
     def terminate(self, who: str) -> bool:
         """ returns True if who (being passed 'X' or 'O') has won or if it's a draw, False otherwise;
@@ -78,20 +106,23 @@ class TicTacToe:
         """
         self.who = who
 
+        # if who is X and hasWon returns true, it means player has won
         if self.hasWon(self.who) and self.who == 'X':
             print("You won! Thanks for playing.")
             return True
         
+        # if who is O and hasWon returns true, it means player has lost
         elif self.hasWon(self.who) and self.who == 'O':
             print("You lost! Thanks for playing.")
             return True
 
+        # if board is filled but there hasWon does not show a winner, it means it's a draw
         elif (' ' not in self.board) and not self.hasWon(self.who):
             print("A draw! Thanks for playing.")
             return True
 
         else:
-            return False
+            return False # no win/draw conditions met, continue the game
 
 
 
