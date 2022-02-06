@@ -82,79 +82,80 @@ def checkSubgrid(puzzle: list, subgrid: int):
     checkSum: int = 1                   # checkSum assumes all numbers are in the column unless shown otherwise
     index: int = 0
 
+    # checks cases for each individual subgrid
     if subgrid == 0:
-        for i in range(0, 3):
-            for j in range(0, 3):
+        for i in range(0, 3):       # subgrid 0 is rows 0-2...
+            for j in range(0, 3):   # ... and columns 0-2
                 subGridVals[index] = puzzle[i][j]
-                index += 1
+                index += 1          # iterating index for the list
     
     elif subgrid == 1:
-        for i in range(0, 3):
-            for j in range(3, 6):
+        for i in range(0, 3):       # subgrid 1 is rows 0-2...
+            for j in range(3, 6):   # ... and columns 3-5
                 subGridVals[index] = puzzle[i][j]
                 index += 1
     
     elif subgrid == 2:
-        for i in range(0, 3):
-            for j in range(6, 9):
+        for i in range(0, 3):       # subgrid 2 is rows 0-2...
+            for j in range(6, 9):   # ... and columns 6-8
                 subGridVals[index] = puzzle[i][j]
                 index += 1
     
     elif subgrid == 3:
-        for i in range(3, 6):
-            for j in range(0, 3):
+        for i in range(3, 6):       # subgrid 3 is rows 3-5...
+            for j in range(0, 3):   # ... and columns 0-2
                 subGridVals[index] = puzzle[i][j]
                 index += 1
     
     elif subgrid == 4:
-        for i in range(3, 6):
-            for j in range(3, 6):
+        for i in range(3, 6):       # subgrid 4 is rows 3-5...
+            for j in range(3, 6):   # ... and column 3-5
                 subGridVals[index] = puzzle[i][j]
                 index += 1
     
     elif subgrid == 5:
-        for i in range(3, 6):
-            for j in range(6, 9):
+        for i in range(3, 6):       # subgrid 5 is rows 3-5...
+            for j in range(6, 9):   # ... and column 6-8
                 subGridVals[index] = puzzle[i][j]
                 index += 1
     
     elif subgrid == 6:
-        for i in range(6, 9):
-            for j in range(0, 3):
+        for i in range(6, 9):       # subgrid 6 is rows 6-8...
+            for j in range(0, 3):   # ... and column 0-2
                 subGridVals[index] = puzzle[i][j]
                 index += 1
     
     elif subgrid == 7:
-        for i in range(6, 9):
-            for j in range(3, 6):
+        for i in range(6, 9):       # subgrid 7 is rows 6-8...
+            for j in range(3, 6):   # ... and columns 3-5
                 subGridVals[index] = puzzle[i][j]
                 index += 1
     
     elif subgrid == 8:
-        for i in range(6, 9):
-            for j in range(6, 9):
+        for i in range(6, 9):       # subgrid 8 is rows 6-8...
+            for j in range(6, 9):   # ... and columns 6-8
                 subGridVals[index] = puzzle[i][j]
                 index += 1
     
     else:
-        print ("ERROR: SHOULDN'T END UP HERE")
+        print ("ERROR: SHOULDN'T END UP HERE (subGridVals)")  #
 
-    # checks if each number (1-9) is present in the list
+    # checks if each number (1-9) is present in the subgrid
     for i in range (1,10):
         if i not in subGridVals:
             checkSum *= 0 # if a value is not present, checkSum will be set to 0 permanently, as anything*0=0
     
-    # if checkSum is 0, that means at least one number (1-9) is not present in the column
+    # if checkSum is 0, that means at least one number (1-9) is not present in the subgrid
     if checkSum == 0:
         print("Subgrid " + str(subgrid) + " not valid")
     
-    # if checkSum is 1, that means all numbers (1-9) are present in the column
+    # if checkSum is 1, that means all numbers (1-9) are present in the subgrid
     elif checkSum == 1:
         print("Subgrid " + str(subgrid) + " valid")
 
     # sanity check-point, should never end up here, used for debugging logic    
     else:
-        print("ERROR: SHOULDN'T END UP HERE")
+        print("ERROR: SHOULDN'T END UP HERE (subgrid valid)")
 
 
 if __name__ == "__main__":
