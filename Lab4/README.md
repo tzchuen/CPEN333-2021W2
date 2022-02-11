@@ -22,7 +22,7 @@ Consider the following code template:
 
 import threading
 
-def sortingWorker(firstHalf: bool):
+def sortingWorker(firstHalf: bool) -> None:
     """
        If param firstHalf is True, the method
        takes the first half of the shared list testcase,
@@ -36,11 +36,11 @@ def sortingWorker(firstHalf: bool):
     """
     pass #to Implement
 
-def mergingWorker():
+def mergingWorker() -> None:
     """ This function uses the two shared variables 
-        sortedSecondHalf and sortedSecondHalf, and merges
+        sortedFirstHalf and sortedSecondHalf, and merges
         them into a single sorted list that is stored in
-        shared variable sortedFullList.
+        the shared variable sortedFullList.
     """
     pass #to Implement
 
@@ -56,6 +56,7 @@ if __name__ == "__main__":
 
     #as a simple test, printing the final sorted list
     print("The final sorted list is ", SortedFullList)
+
 ```
 
 Implement the two functions first, and then complete the code under the  `if __name__ == "__main__"`: section. 
