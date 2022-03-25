@@ -1,5 +1,4 @@
-# Lab 2
-## Implementing Tic-Tac-Toe game 
+# Lab 2: Implementing Tic-Tac-Toe game 
 
 In this lab, you will implement a command-line tic-tac-toe game (https://en.wikipedia.org/wiki/Tic-tac-toe). The game is one player against the computer, for simplification, the computer makes valid moves randomly not intelligently. You can use the randint method in the random module.
 

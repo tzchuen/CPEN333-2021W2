@@ -1,6 +1,4 @@
-# Lab4
-
-## Producer-consumer problem 
+# Lab 4: Producer-consumer problem 
 
 In this lab we will implement a multithreaded program with a specific python implementation of the producer-consumer synchronization problem. 
 

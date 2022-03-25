@@ -1,5 +1,4 @@
-# Lab 3
-## A Sudoku Solution Validator
+# Lab 3: A Sudoku Solution Validator
 
 In this lab we will implement a sudoku solution validator in two ways. We first write a single process version of the complete program, and then we will also rewrite it so that the validation tasks are done using multiple processes, each responsible only for a portion of validating the puzzle.
 
@@ -42,11 +41,11 @@ For ease of reference, we refer to each of the subgrids with a number between 0 
 
 So for example, the subgrid 4 is the 3x3 subgrid right in the middle of the puzzle.
 
-### Deliverables
+## Deliverables
 * `Lab3_part1.py`
 * `Lab3_part2.py`
 
-### Part1:
+## Part1:
 
 Consider the following code template, which is a single-process version of our program:
 
@@ -165,7 +164,7 @@ Subgrid 7 valid
 Subgrid 8 valid
 ```
 
-### Part2:
+## Part2:
 
 Use the code you completed for Part 1, and modify it so the main program uses the Python's multiprocessing module to create 27 processes to check for validity of the puzzle.
 

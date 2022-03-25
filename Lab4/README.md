@@ -1,8 +1,4 @@
-# Lab4
-
-The objective of this lab is to practice writing multithreading programs using python.
-
-## Multithreaded sorting program
+# Lab 4 - Multithreaded Sorting Program
 
 In this lab we will implement a multithreaded sorting program that sorts a list of integers (assume with a length always divisible by two). 
 
