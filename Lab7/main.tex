@@ -1,0 +1,112 @@
+\documentclass[letterpaper, titlepage, DIV=13, 12pt]{scrartcl}
+\usepackage{import}
+\usepackage{xifthen}
+\usepackage{pdfpages}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage[nottoc]{tocbibind} %Adds "References" to the table of contents
+\usepackage[
+    backend=biber,
+    style=ieee,
+  ]{biblatex}
+\addbibresource{reference.bib}
+\usepackage{caption}
+\usepackage{float}
+\usepackage[colorlinks=true, allcolors=black, urlcolor=black]{hyperref}
+\usepackage{graphicx}
+\usepackage[framed,numbered]{matlab-prettifier}
+\usepackage{mathtools}
+%\usepackage{mcode}
+\usepackage[headsepline]{scrlayer-scrpage}
+\usepackage{graphicx}
+\usepackage{siunitx}
+\usepackage{cancel}
+\usepackage{appendix}
+\usepackage{lipsum}
+\usepackage{listings}
+\usepackage{array}
+\usepackage{tabularx}
+\usepackage{longtable}
+\usepackage{tikz}
+\usepackage{pgf}
+\usepackage{url}
+\usepackage{appendix}
+\usepackage[toc, acronyms]{glossaries}
+%\usepackage{fontawesome}
+\renewcommand\tabularxcolumn[1]{m{#1}}% for vertical centering text in X column
+\setlength{\parskip}{0.3cm} 
+\renewcommand{\familydefault}{\sfdefault}
+
+\newcommand{\incfig}[1]{%
+    \def\svgwidth{0.75\columnwidth}
+    \import{./}{#1.pdf_tex}
+}
+
+\renewcommand{\familydefault}{\sfdefault}
+
+\title{Lab 7}
+\subtitle{CPEN 333 - System Software Engineering}
+\author{
+    Zhi Chuen Tan (65408361)
+}
+
+\date{2021W2}
+\publishers{
+    \begin{figure}[!b]
+       	\centering
+        \begin{minipage}{0.5\textwidth}
+            \centering
+            \includegraphics[width=\textwidth]{9_2016_3UnitNarrow_AppliedScience_Blue282CMYK.eps} % first figure itself
+        \end{minipage}\hfill
+        \begin{minipage}{0.5\textwidth}
+            \centering
+            \includegraphics[width=0.75\textwidth]{ECE_closed_full_colour_3.png} % second figure itself
+            \end{minipage}
+    \end{figure}
+}
+
+\setkomafont{pageheadfoot}{%
+\normalcolor}
+\ohead{CPEN 333 201 \\ 2021W2}
+\chead{\Large{Lab 7}}
+\ihead{Zhi Chuen Tan \\ 65408361}
+
+
+\usepackage[onehalfspacing]{setspace} %For line spacing
+
+\setlength{\parindent}{0pt} % Disable indentation
+
+\begin{document}
+\onehalfspacing
+\hypersetup{pageanchor=false}
+\begin{titlepage}
+    \maketitle
+    %\vfill
+\end{titlepage}
+\hypersetup{pageanchor=true}
+
+\section*{Question 1}
+\begin{figure}[htbp]
+    \centering
+    \input{Diagram1.tex}
+\end{figure}
+
+\newpage
+\section*{Question 2}
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=\textwidth]{Diagram2.eps}
+\end{figure}
+
+\newpage
+\section*{Question 3}
+The sequence diagram is a \texttt{.eps} vector diagram and can be zoomed-in with no significant loss in resolution.
+\begin{figure}[htbp]
+    \centering
+    \includegraphics[width=\textwidth]{Diagram3.eps}
+\end{figure} \\
+
+Thank you to the entire CPEN 333 teaching team! This was a very fun course and I learned a lot from it. All the best! :)
+
+
+
+\end{document}
