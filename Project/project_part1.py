@@ -1,46 +1,4 @@
-# Part 1: Implementing a multithreaded game with graphic user interface 
-
-We are to implement a simplified snake game in this project. Here are some characteristics of the program:
-* Python's `multithreading` module is used to implement multithreading in our program.
-* Python's [`Tkinter` module](https://docs.python.org/3/library/tkinter.html) is used to create the graphic user interface for our program. It doesn't affect the code you would write directly, but FYI, under the hood `Tkinter` uses event-driven programming to implement concurrency. We have already used `turtle` (which is a toy and educational GUI module). In contrast, `Tkinter` is a popular and much more capable Python GUI module that comes as a part of Python's standard library (so no need to install anything additional).
-* Python's [`queue` module](https://docs.python.org/3/library/queue.html) is used as an excellent **thread-safe** multi-producer, multi-consumer queue (so we would not need any additional synchronization mechanism).  Different tasks in our program are put in the FIFO queue and handled accordingly. 
-* The game is played by the four arrow keys of the keyboard bound to the corresponding directions, e.g. left arrow for the left direction, down arrow for the downward direction, ... This is done by the `Tkinter`'s provision of binding keys.
-The game is a variety of the [snake game](https://en.wikipedia.org/wiki/Snake_(video_game_genre) ) which is a classic arcade game dating back to the early generations of computer games. The gamer controls a snake using the keyboard's arrow keys and the objective is to collect as many preys as possible (so the displayed game score is the number of collected preys). Each prey is stationary and is placed randomly on the game windows. As the snake feeds, it become longer (one additional block each time), progressively making it harder to control without losing.
-* The game is over if the snake hits any of the walls or if it hits itself (technically biting itself).
-* Many game related values are set using constants. For example, the speed of the game (the snake speed) is set to 0.15 (sec). Of course, you can adjust that during your debugging (if you need to slow it down or speed it up for your amusement). There are a few magic numbers left in the game but it should rather be clear what they are. 
-
-Please read the docstring for each of the methods or portion of the program that is left for you to implement, complete the `project_part1.py` file and submit to the associated submission dropbox by the deadline. 
-
-Some notes:
-* The snake's current position and length is represented by the field `snakeCoordinates` of the `Game` class. It is a list of tuples. Each tuple is an (x, y) coordinate. In the GUI, the snake is represented by the `snakeIcon` which is a Tkinter canvas line with the width `SNAKE_ICON_WIDTH` based on the `snakeCoordinate` list.
-* The new prey is created at the beginning of the game and each time the snake captures one. In the GUI, the prey is represented by the `preyIcon` which is a `Tkinter` canvas rectangle. The method `createNewPrey` randomly generates an `x` and a `y`, and then sets the prey `rectnagleCoordinates` as `(x - 5, y - 5, x + 5, y + 5)` which is added as a task to the queue. On the GUI, the prey is a 10 by 10 rectangle.
-* The queue is a FIFO queue of all the pending tasks that each portion of the program created and added to the queue. Each item in the queue is a dictionary. 
-    - The keys in the dictionary is one of "`game_over`", "`move`", "`prey`", or "`score`".
-    - The value depends on the key. 
-        * The value for the key "`game_over`" is a Boolean value (`True` or `False`)
-        * The value for the key "`score`" is an integer representing the new score.
-        * The value for the key "`prey`" is the new rectangleCoordinates of the form `(x1, y1, x2, y2)`.
-        * The value for the key "`move`" is the `snakeCoordinates` which is a list of tuples.
-* The implementations of the *GUI* and the *Queue* classes, as well as the main thread is given to you. You are to complete the implementation of some of the methods in the *Game* class. Those two types and their operations must be used by the *Game* class whenever needed.
-* Note that the `*` in an argument of the form `*var` in a function call is an unpacking operator. From the [documentation](https://docs.python.org/3/reference/expressions.html#expression-lists): 
-    > An asterisk `*` denotes iterable unpacking. Its operand must be an iterable. The iterable is expanded into a sequence of items, which are included in the new tuple, list, or set, at the site of the unpacking. 
-    
-    Also in [PEP 448](https://peps.python.org/pep-0448/). (A note that `*` has different meaning for the method's formal parameter as opposed to a function argument.)
-
-Here is a [video](https://youtu.be/kFzkDpd5qNo) of the sample run of the game.
-
-For a general but much longer and sped-up demo of a generic snake game see here: https://en.wikipedia.org/wiki/Snake_(video_game_genre)#/media/File:Snake_can_be_completed.gif
-
-The amount of code that you will be writing is not much, but you need to understand the problem and figure out how to work with the provided classes and code to complete the project. This is a common situation when you join a company in real-life and need to continue on and complete a project based on present code and client requirements. 
-
-You are allowed to add local functions to any of the methods but do not add any new type, or new methods.
-
-Make sure that your code is readable and add comments whenever needed to explain your code.
-
-Here is the code template:
-
-```python
-# Name:
+# Name: Pasit Laothamatas, Zhi Chuen Tan
 # Student number: 
 
 """
@@ -53,6 +11,7 @@ import queue        #the thread-safe queue from Python standard library
 
 from tkinter import Tk, Canvas, Button
 import random, time
+from turtle import window_height
 
 class Gui():
     """
@@ -241,8 +200,26 @@ class Game():
             away from the walls. 
         """
         THRESHOLD = 15   #sets how close prey can be to borders
-        #complete the method implementation below
 
+        # set a random x
+        x = (random.randint(THRESHOLD, WINDOW_WIDTH - THRESHOLD)) 
+
+        # makes sure x coordinate will be within threshold
+        while (x - 5 < THRESHOLD) or (x + 5 > WINDOW_WIDTH - THRESHOLD):    
+             x = (random.randint(THRESHOLD, WINDOW_WIDTH - THRESHOLD))
+
+        # set a random y
+        y = (random.randint(THRESHOLD, WINDOW_HEIGHT - THRESHOLD))
+
+        # makes sure x coordinate will be within threshold
+        while (y - 5 < THRESHOLD) or (y + 5 > WINDOW_HEIGHT - THRESHOLD):
+            y = (random.randint(THRESHOLD, WINDOW_HEIGHT - THRESHOLD))
+        
+        rectangleCoordinates = (x - 5, y - 5, x + 5, y + 5)
+
+        task["prey"] = rectangleCoordinates
+
+       
 
 if __name__ == "__main__":
     #some constants for our GUI
@@ -266,25 +243,3 @@ if __name__ == "__main__":
 
     #start the GUI's own event loop
     gui.root.mainloop()
-```
-
-# Part 2: UDP Pinger (client and server)
-
-This is a socket programming program for UDP using Python's socket module as discussed in the [lecture](https://docs.python.org/3/library/socket.html).
-
-Write one python3 file as the client program (`clinet.py`) and one python3 file as the server program (`server.py`). Please submit the two files to the associated submission dropbox by the deadline. The code must include sufficient comment statements. No email or late submission is accepted, please do plan ahead accordingly. 
-
-The two processes normally run on two separate host computers on the Internet, but obviously you should develop/debug them both running on one machine (your computer). So, you can use `localhost` (or alternatively `127.0.0.1`) as the `hostname`. [`127.0.0.1`](https://en.wikipedia.org/wiki/Localhost) is called the loopback IP address and is used to identify the same machine without the need to know any machine's real network interface IP addresses.
-
-The actual communication between the two processes is very straightforward. The client sends a simple greeting message including the message number, for example “`PING 1 - hello world`”) to the server using UDP. Second message would be for example “`PING 2 - hello world`”, etc.
-
-The server listens on the UDP port `12000` and responds back by simply replacing the greeting with "`ditto`" and then sends back the message. For example, in response to the above message, it echoes back "`PING 1 - ditto`").
-
-The client then calculates the Round Trip Time (RTT) and prints out the RTT result, and the received message itself (since it has the message number). RTT is a common delay measure and it is the delay from the time the client sent the ping message and the time it received the echoed response message.
-
-The client then repeat the above 4 more times (that is, we send 5 ping messages and calculate the corresponding 5 RTT values). 
-* To simulate the variability of the RTT delay, the server program must randomly wait for some time between `5` to `50` ms before responding back. 
-* To simulate packet loss (that is, the messages that are lost for any reason along the way in an actual IPC communication over the Internet), the server must randomly ignore a message (i.e. not responding back) with a probability of 10%. If the client does not hear back within 1 sec for a sent message it must print a ‘`request timed out`’ message. 
-* You may begin by using the code provided in the slides as a starting template for the programs.
-
-To implement variable delay and loss and calculating the delay, use the methods in the `random` module (to create random variables) and `time` module (for timing related functionalities) in Python.
