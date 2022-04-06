@@ -124,7 +124,7 @@ class Game():
             Use the SPEED constant to set how often the move tasks
             are generated.
         """
-        SPEED = 0.15     #speed of snake updates (sec)
+        SPEED = 0.5     #speed of snake updates (sec)
         while self.gameNotOver:
             #complete the method implementation below
 
@@ -133,6 +133,7 @@ class Game():
             self.queue.put({"move" : self.snakeCoordinates})
 
             # TODO: create new prey when there is an intersection with the head of the snake
+          
             self.createNewPrey()
 
             # Apply a .15 second delay for each iteration of the loop
@@ -171,11 +172,13 @@ class Game():
         NewSnakeCoordinates = [list(self.calculateNewCoordinates())]
 
         if self.direction == "Left":
-            self.snakeCoordinates = self.snakeCoordinates[1:] + NewSnakeCoordinates
+            self.snakeCoordinates = self.snakeCoordinates[1:] + NewSnakeCoordinates  # discard rightmost pixel and append 
         elif self.direction == "Right":
             self.snakeCoordinates = NewSnakeCoordinates + self.snakeCoordinates[:4]
+        
+        # TODO: make this work
         elif self.direction == "Up":
-            self.snakeCoordinates = self.snakeCoordinates
+            self.snakeCoordinates = NewSnakeCoordinates + self.snakeCoordinates[:-1]
         else:
             self.snakeCoordinates = self.snakeCoordinates
 
@@ -191,22 +194,23 @@ class Game():
             It is used by the move() method.    
         """
 
-        lastX, lastY = self.snakeCoordinates[-1]
-        firstX, firstY = self.snakeCoordinates[0]
+        lastX, lastY = self.snakeCoordinates[-1]    # leftmost pixel of snake (i.e. head)
+
+        # zhi: idt we should be moving the "tail" of the snake, which this kinda is
+        # firstX, firstY = self.snakeCoordinates[0]   # rightmost part of snake
 
         coord = None
 
         if self.direction == "Left":
-            coord = (lastX-10, lastY)
-        
+            coord = (lastX - 10, lastY)
+            print (coord)
         elif self.direction == "Right":
-            coord = (firstX+10, firstY)
-        
+            coord = (lastX + 10, lastY)
         # TODO: implement move up and down
         elif self.direction == "Up":
-            coord = (0,0)
+            coord = (lastX, lastY - 10)
         else:
-            coord = (0,0)
+            coord = (lastX, lastY + 10)
 
         return coord
 
