@@ -1,4 +1,4 @@
-# Name: Pasit Laothamatas, Zhi Chuen Tan
+# Name: 
 # Student number: 
 
 """
@@ -11,7 +11,6 @@ import queue        #the thread-safe queue from Python standard library
 
 from tkinter import Tk, Canvas, Button
 import random, time
-from turtle import window_height
 
 class Gui():
     """
@@ -128,7 +127,16 @@ class Game():
         SPEED = 0.15     #speed of snake updates (sec)
         while self.gameNotOver:
             #complete the method implementation below
-            pass #remove this line from your implemenation
+
+            # Create dictionary
+            self.move()
+            self.queue.put({"move" : self.snakeCoordinates})
+
+            # TODO: create new prey when there is an intersection with the head of the snake
+            self.createNewPrey()
+
+            # Apply a .15 second delay for each iteration of the loop
+            time.sleep(SPEED)
 
     def whenAnArrowKeyIsPressed(self, e) -> None:
         """ 
@@ -160,9 +168,18 @@ class Game():
             The snake coordinates list (representing its length 
             and position) should be correctly updated.
         """
-        NewSnakeCoordinates = self.calculateNewCoordinates()
-        #complete the method implementation below
+        NewSnakeCoordinates = [list(self.calculateNewCoordinates())]
 
+        if self.direction == "Left":
+            self.snakeCoordinates = self.snakeCoordinates[1:] + NewSnakeCoordinates
+        elif self.direction == "Right":
+            self.snakeCoordinates = NewSnakeCoordinates + self.snakeCoordinates[:4]
+        elif self.direction == "Up":
+            self.snakeCoordinates = self.snakeCoordinates
+        else:
+            self.snakeCoordinates = self.snakeCoordinates
+
+        #complete the method implementation below
 
     def calculateNewCoordinates(self) -> tuple:
         """
@@ -173,9 +190,25 @@ class Game():
             head of the snake.
             It is used by the move() method.    
         """
-        lastX, lastY = self.snakeCoordinates[-1]
-        #complete the method implementation below
 
+        lastX, lastY = self.snakeCoordinates[-1]
+        firstX, firstY = self.snakeCoordinates[0]
+
+        coord = None
+
+        if self.direction == "Left":
+            coord = (lastX-10, lastY)
+        
+        elif self.direction == "Right":
+            coord = (firstX+10, firstY)
+        
+        # TODO: implement move up and down
+        elif self.direction == "Up":
+            coord = (0,0)
+        else:
+            coord = (0,0)
+
+        return coord
 
     def isGameOver(self, snakeCoordinates) -> None:
         """
@@ -201,25 +234,10 @@ class Game():
         """
         THRESHOLD = 15   #sets how close prey can be to borders
 
-        # set a random x
         x = (random.randint(THRESHOLD, WINDOW_WIDTH - THRESHOLD)) 
-
-        # makes sure x coordinate will be within threshold
-        while (x - 5 < THRESHOLD) or (x + 5 > WINDOW_WIDTH - THRESHOLD):    
-             x = (random.randint(THRESHOLD, WINDOW_WIDTH - THRESHOLD))
-
-        # set a random y
         y = (random.randint(THRESHOLD, WINDOW_HEIGHT - THRESHOLD))
-
-        # makes sure x coordinate will be within threshold
-        while (y - 5 < THRESHOLD) or (y + 5 > WINDOW_HEIGHT - THRESHOLD):
-            y = (random.randint(THRESHOLD, WINDOW_HEIGHT - THRESHOLD))
-        
-        rectangleCoordinates = (x - 5, y - 5, x + 5, y + 5)
-
-        task["prey"] = rectangleCoordinates
-
-       
+        rectangleCoordinates = {"prey" : (x - 5, y - 5, x + 5, y + 5)}
+        self.queue.put(rectangleCoordinates)
 
 if __name__ == "__main__":
     #some constants for our GUI
