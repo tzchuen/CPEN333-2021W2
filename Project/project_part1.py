@@ -114,7 +114,9 @@ class Game():
         #initial direction of the snake
         self.direction = "Left"
         self.gameNotOver = True
+        self.rectangleCoordinates = None
         self.createNewPrey()
+        
 
 
     def superloop(self) -> None:
@@ -175,25 +177,20 @@ class Game():
         self.snakeCoordinates = self.snakeCoordinates[1:] + NewSnakeCoordinates  # discard rightmost pixel and append 
 
         for _ in range(len(self.snakeCoordinates)):
-<<<<<<< HEAD
+
             x, y = self.snakeCoordinates[_]
 
-            self.createNewPrey.rectangleCoordinates
+            if (x in range(self.rectangleCoordinates[0], self.rectangleCoordinates[2] + 1) and y in range(self.rectangleCoordinates[1], self.rectangleCoordinates[3] + 1)):
+                self.score += 1
+                self.queue.put({"score": self.score})
+                NewSnakeCoordinates = [list(self.calculateNewCoordinates())]
+                self.snakeCoordinates = self.snakeCoordinates + NewSnakeCoordinates
+                self.createNewPrey()
 
-            if x in range(self.rectangleCoordinates[0], self.rectangleCoordinates[2]) or y in range(self.rectangleCoordinates[1], self.rectangleCoordinates[3]):
-                newScore = self.score + 1
-                self.queue.put({"score" : newScore})   
-
-=======
->>>>>>> f2db95a3ec1d27a542c111161303eb7add59d591
             self.isGameOver(self.snakeCoordinates[_])
         
-        # TODO: create new prey when there is an intersection with the head of the snake
 
-        # TODO: Get snake to intersect with prey and then run the code below
-        if False:
-            NewSnakeCoordinates = [list(self.calculateNewCoordinates())]
-            self.snakeCoordinates = self.snakeCoordinates + NewSnakeCoordinates
+     
 
     def calculateNewCoordinates(self) -> tuple:
         """
@@ -247,8 +244,8 @@ class Game():
 
         x = (random.randint(THRESHOLD, WINDOW_WIDTH - THRESHOLD)) 
         y = (random.randint(THRESHOLD, WINDOW_HEIGHT - THRESHOLD))
-        rectangleCoordinates = (x - 5, y - 5, x + 5, y + 5)
-        self.queue.put({"prey" : rectangleCoordinates})
+        self.rectangleCoordinates = (x - 5, y - 5, x + 5, y + 5)
+        self.queue.put({"prey" : self.rectangleCoordinates})
 
 if __name__ == "__main__":
     #some constants for our GUI
