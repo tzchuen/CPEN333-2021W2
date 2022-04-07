@@ -172,9 +172,14 @@ class Game():
             The snake coordinates list (representing its length 
             and position) should be correctly updated.
         """
-        NewSnakeCoordinates = [list(self.calculateNewCoordinates())]
+        NewSnakeCoordinates = [(self.calculateNewCoordinates())]
 
         self.snakeCoordinates = self.snakeCoordinates[1:] + NewSnakeCoordinates  # discard rightmost pixel and append 
+
+        lastX, lastY = self.snakeCoordinates[-1]
+        if (lastX, lastY) in self.snakeCoordinates[:4]:
+            self.gameNotOver = False
+            self.queue.put({"game_over" : True})
 
         for _ in range(len(self.snakeCoordinates)):
 
@@ -188,9 +193,6 @@ class Game():
                 self.createNewPrey()
 
             self.isGameOver(self.snakeCoordinates[_])
-        
-
-     
 
     def calculateNewCoordinates(self) -> tuple:
         """
