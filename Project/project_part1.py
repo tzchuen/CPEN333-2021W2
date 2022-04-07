@@ -176,23 +176,19 @@ class Game():
 
         self.snakeCoordinates = self.snakeCoordinates[1:] + NewSnakeCoordinates  # discard rightmost pixel and append 
 
-        lastX, lastY = self.snakeCoordinates[-1]
+        x,y = self.snakeCoordinates[-1]
         if (lastX, lastY) in self.snakeCoordinates[:4]:
             self.gameNotOver = False
             self.queue.put({"game_over" : True})
 
-        for _ in range(len(self.snakeCoordinates)):
+        if (x in range(self.rectangleCoordinates[0], self.rectangleCoordinates[2] + 1) and y in range(self.rectangleCoordinates[1], self.rectangleCoordinates[3] + 1)):
+            self.score += 1
+            self.queue.put({"score": self.score})
+            NewSnakeCoordinates = [list(self.calculateNewCoordinates())]
+            self.snakeCoordinates = self.snakeCoordinates + NewSnakeCoordinates
+            self.createNewPrey()
 
-            x, y = self.snakeCoordinates[_]
-
-            if (x in range(self.rectangleCoordinates[0], self.rectangleCoordinates[2] + 1) and y in range(self.rectangleCoordinates[1], self.rectangleCoordinates[3] + 1)):
-                self.score += 1
-                self.queue.put({"score": self.score})
-                NewSnakeCoordinates = [list(self.calculateNewCoordinates())]
-                self.snakeCoordinates = self.snakeCoordinates + NewSnakeCoordinates
-                self.createNewPrey()
-
-            self.isGameOver(self.snakeCoordinates[_])
+        self.isGameOver(self.snakeCoordinates[-1])
 
     def calculateNewCoordinates(self) -> tuple:
         """
@@ -225,6 +221,8 @@ class Game():
             field and also adds a "game_over" task to the queue. 
         """
         x, y = snakeCoordinates
+        print(snakeCoordinates)
+        print(self.snakeCoordinates)
         
         # TODO: game over for when the snake eats itself
         if (x <= 0 or y <= 0 or x >= WINDOW_WIDTH or y >= WINDOW_HEIGHT):
