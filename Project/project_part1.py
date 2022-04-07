@@ -124,7 +124,7 @@ class Game():
             Use the SPEED constant to set how often the move tasks
             are generated.
         """
-        SPEED = 0.35     #speed of snake updates (sec)
+        SPEED = 0.15     #speed of snake updates (sec)
 
         # Create prey at the start of the game
         self.createNewPrey()
@@ -174,16 +174,14 @@ class Game():
         self.snakeCoordinates = self.snakeCoordinates[1:] + NewSnakeCoordinates  # discard rightmost pixel and append 
 
         for _ in range(len(self.snakeCoordinates)):
-            x, y = self.snakeCoordinates[_]
-
-            if x in range(self.rectangleCoordinates[0]) or y in range(self.rectangleCoordinates[1]):
-                pass
-
             self.isGameOver(self.snakeCoordinates[_])
-
-
         
         # TODO: create new prey when there is an intersection with the head of the snake
+
+        # TODO: Get snake to intersect with prey and then run the code below
+        if False:
+            NewSnakeCoordinates = [list(self.calculateNewCoordinates())]
+            self.snakeCoordinates = self.snakeCoordinates + NewSnakeCoordinates
 
     def calculateNewCoordinates(self) -> tuple:
         """
