@@ -1,5 +1,5 @@
-# Name: 
-# Student number: 
+# Name: Pasit Laothamatas
+# Student number: 28570166
 
 """
     This program implements one variety of the snake 
@@ -116,8 +116,6 @@ class Game():
         self.gameNotOver = True
         self.rectangleCoordinates = None
         self.createNewPrey()
-        
-
 
     def superloop(self) -> None:
         """
@@ -172,23 +170,29 @@ class Game():
             The snake coordinates list (representing its length 
             and position) should be correctly updated.
         """
+        
+        # Updating snake coordinates
         NewSnakeCoordinates = [(self.calculateNewCoordinates())]
-
         self.snakeCoordinates = self.snakeCoordinates[1:] + NewSnakeCoordinates  # discard rightmost pixel and append 
 
+        # Get the snake head coordinates
         x,y = self.snakeCoordinates[-1]
-        if (lastX, lastY) in self.snakeCoordinates[:4]:
-            self.gameNotOver = False
-            self.queue.put({"game_over" : True})
+        
+        # If check if we need to end the game
+        self.isGameOver((x,y))
 
+        # Checking if prey captured
         if (x in range(self.rectangleCoordinates[0], self.rectangleCoordinates[2] + 1) and y in range(self.rectangleCoordinates[1], self.rectangleCoordinates[3] + 1)):
+            # Update the score
             self.score += 1
             self.queue.put({"score": self.score})
+
+            # Enlarge the snake
             NewSnakeCoordinates = [list(self.calculateNewCoordinates())]
             self.snakeCoordinates = self.snakeCoordinates + NewSnakeCoordinates
-            self.createNewPrey()
 
-        self.isGameOver(self.snakeCoordinates[-1])
+            # Create new prey to be captured by the snake
+            self.createNewPrey()
 
     def calculateNewCoordinates(self) -> tuple:
         """
@@ -201,15 +205,15 @@ class Game():
         """
 
         lastX, lastY = self.snakeCoordinates[-1]    # leftmost pixel of snake (i.e. head)
-        coord = None
 
         if self.direction == "Left":
-            coord = (lastX-10, lastY)
+            coord = (lastX-10,lastY)
         elif self.direction == "Right":
-            coord = (lastX + 10, lastY)
+            coord = (lastX+10,lastY)
+        elif self.direction == "Up":
+            coord = (lastX,lastY-10)
         else:
-            newY = (lastY-10) if (self.direction == "Up") else (lastY+10)
-            coord = (lastX, newY)
+            coord = (lastX,lastY+10)
         return coord
 
     def isGameOver(self, snakeCoordinates) -> None:
@@ -221,11 +225,11 @@ class Game():
             field and also adds a "game_over" task to the queue. 
         """
         x, y = snakeCoordinates
-        print(snakeCoordinates)
-        print(self.snakeCoordinates)
+
+        hasBitItself = (x,y) in self.snakeCoordinates[:4]
+        hasHitWall = (x <= 0 or y <= 0 or x >= WINDOW_WIDTH or y >= WINDOW_HEIGHT)
         
-        # TODO: game over for when the snake eats itself
-        if (x <= 0 or y <= 0 or x >= WINDOW_WIDTH or y >= WINDOW_HEIGHT):
+        if hasBitItself or hasHitWall:
             self.gameNotOver = False
             self.queue.put({"game_over" : True})
 
