@@ -136,8 +136,6 @@ class Game():
             self.move()
             self.queue.put({"move" : self.snakeCoordinates})
 
-            # TODO: create new prey when there is an intersection with the head of the snake
-
             # Apply a .15 second delay for each iteration of the loop
             time.sleep(SPEED)
 
@@ -172,9 +170,20 @@ class Game():
             and position) should be correctly updated.
         """
         NewSnakeCoordinates = [list(self.calculateNewCoordinates())]
+
         self.snakeCoordinates = self.snakeCoordinates[1:] + NewSnakeCoordinates  # discard rightmost pixel and append 
 
-        #complete the method implementation below
+        for _ in range(len(self.snakeCoordinates)):
+            x, y = self.snakeCoordinates[_]
+
+            if x in range(self.rectangleCoordinates[0]) or y in range(self.rectangleCoordinates[1]):
+                pass
+
+            self.isGameOver(self.snakeCoordinates[_])
+
+
+        
+        # TODO: create new prey when there is an intersection with the head of the snake
 
     def calculateNewCoordinates(self) -> tuple:
         """
@@ -207,7 +216,11 @@ class Game():
             field and also adds a "game_over" task to the queue. 
         """
         x, y = snakeCoordinates
-        #complete the method implementation below
+        
+        # TODO: game over for when the snake eats itself
+        if (x <= 0 or y <= 0 or x >= WINDOW_WIDTH or y >= WINDOW_HEIGHT):
+            self.gameNotOver = False
+            self.queue.put({"game_over" : True})
 
     def createNewPrey(self) -> None:
         """ 
@@ -224,8 +237,8 @@ class Game():
 
         x = (random.randint(THRESHOLD, WINDOW_WIDTH - THRESHOLD)) 
         y = (random.randint(THRESHOLD, WINDOW_HEIGHT - THRESHOLD))
-        rectangleCoordinates = {"prey" : (x - 5, y - 5, x + 5, y + 5)}
-        self.queue.put(rectangleCoordinates)
+        rectangleCoordinates = (x - 5, y - 5, x + 5, y + 5)
+        self.queue.put({"prey" : rectangleCoordinates})
 
 if __name__ == "__main__":
     #some constants for our GUI
