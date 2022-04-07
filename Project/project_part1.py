@@ -116,6 +116,7 @@ class Game():
         self.gameNotOver = True
         self.createNewPrey()
 
+
     def superloop(self) -> None:
         """
             This method implements a main loop
@@ -176,12 +177,13 @@ class Game():
         for _ in range(len(self.snakeCoordinates)):
             x, y = self.snakeCoordinates[_]
 
-            if x in range(self.rectangleCoordinates[0]) or y in range(self.rectangleCoordinates[1]):
-                pass
+            self.createNewPrey.rectangleCoordinates
+
+            if x in range(self.rectangleCoordinates[0], self.rectangleCoordinates[2]) or y in range(self.rectangleCoordinates[1], self.rectangleCoordinates[3]):
+                newScore = self.score + 1
+                self.queue.put({"score" : newScore})   
 
             self.isGameOver(self.snakeCoordinates[_])
-
-
         
         # TODO: create new prey when there is an intersection with the head of the snake
 
