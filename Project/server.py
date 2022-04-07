@@ -1,3 +1,7 @@
+# Name: Pasit Laothamatas, Zhi Chuen Tan
+# Student number: 28570166, 65408361
+
+
 from socket import *
 import time
 import random
